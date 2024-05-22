@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Callbacks</title>
+    
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Callback <span>Function</span></h1>
+        <button id="fetchBtn" onclick="btnColor()">Fetch Data</button>
+        <div class="result" id="output"></div>
+    </div>
+
+
+
+    <!-- javaSript code -->
+
+    <script>
+
+// change button color after click the button
+        function btnColor() {
+            document.getElementById("fetchBtn").setAttribute("style", "background-color: coral");
+
+        }
+
+
+        // thid code diplay  as= `Callback executed after 5 seconds`
+        document.getElementById("fetchBtn").addEventListener("click", function () {
+            setTimeout(function () {
+                document.getElementById("output").innerText = `Callback executed after 5 seconds`;
+            }, 2000); // 2000 milliseconds = 2 seconds
+        });
+
+
+
+        // fetch the data and send the in side
+
+        document.getElementById("fetchBtn").addEventListener("click", fetchData);
+
+        function fetchData() {
+            setTimeout(() => {
+                fetch('https://jsonplaceholder.typicode.com/posts')
+                    .then(response => response.json())
+                    .then(data => {
+                        const outputDiv = document.getElementById("output");
+                        outputDiv.innerHTML = "Post:-<br>";
+                        data.forEach(post => {
+                            const postTitle = document.createElement("p");
+                            postTitle.textContent = post.title;
+                            outputDiv.appendChild(postTitle);
+                        });
+                    })
+                    .catch(error => console.error(`Error fetching data:`, error));
+            }, 5000);
+        }
+
+
+    </script>
+</body>
+
+</html>
